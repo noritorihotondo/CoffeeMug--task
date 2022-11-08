@@ -8,7 +8,7 @@ import {
   ApiErrorCode,
 } from '../../types';
 
-export const createUser = async (body: CreateProductRequest): Promise<CreateProductResponse> => {
+export const createProduct = async (body: CreateProductRequest): Promise<CreateProductResponse> => {
   let product = new Product();
   product.name = body.name;
   product.price = body.price;
@@ -24,6 +24,12 @@ export const createUser = async (body: CreateProductRequest): Promise<CreateProd
       'CreateProduct',
     );
   }
+
+  return product;
+};
+
+export const findProductByName = async (name: string) => {
+  const product = await Product.findOneBy({ name });
 
   return product;
 };
