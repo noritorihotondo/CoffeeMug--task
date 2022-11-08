@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql_server:
+    image: mariadb:latest
+    restart: always
+    container_name: dbcoffeemug
+    env_file:
+      - .env
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=${DB_DATABASE}
+    ports:
+      - '3306:3306'
+    networks:
+      - mynet
+
+  app:
+    build:
+      context: .
+    ports:
+      - '8080:8080'
+    networks:
+      - mynet
+    depends_on:
+      - mysql_server
+
+networks:
+  mynet:
+    driver: bridge
